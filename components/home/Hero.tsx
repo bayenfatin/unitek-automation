@@ -34,28 +34,6 @@ export default function Hero() {
         />
       </div>
 
-      {/* ── Ghost logo watermark ─────────────────────────────────── */}
-      {/* Huge, right-anchored, very low opacity — technique blueprint industriel */}
-      <div
-        className="absolute z-10 pointer-events-none select-none"
-        style={{
-          right: "-60px",
-          bottom: "60px",
-          width: "min(860px, 65vw)",
-          opacity: 0.055,
-        }}
-        aria-hidden="true"
-      >
-        <Image
-          src="/unitek-logo.png"
-          alt=""
-          width={860}
-          height={248}
-          className="object-contain w-full h-auto"
-          style={{ filter: "brightness(0) invert(1)" }}
-        />
-      </div>
-
       {/* ── System bar ───────────────────────────────────────────── */}
       <div className="relative z-20 border-b border-border px-6 py-2 flex items-center justify-between bg-surface/70 backdrop-blur-sm">
         <span className="label-mono text-fore-muted">
@@ -137,19 +115,6 @@ export default function Hero() {
 
       </div>
 
-      {/* ── CNC brands strip ─────────────────────────────────────── */}
-      <div className="relative z-20 border-t border-border px-8 lg:px-16 py-3 flex items-center gap-6 bg-surface/60 backdrop-blur-sm">
-        <span className="label-mono text-fore-muted flex-shrink-0">[ SYSTÈMES ]</span>
-        <div className="flex items-center gap-4 flex-wrap">
-          {["SIEMENS", "FANUC", "NUM", "HEIDENHAIN", "SCHNEIDER", "BOSCH"].map((brand) => (
-            <span key={brand} className="data-mono text-fore-muted" style={{ fontSize: "0.65rem" }}>
-              {brand}
-            </span>
-          ))}
-        </div>
-        <div className="flex-1 h-px bg-border" />
-        <span className="label-mono text-fore-muted flex-shrink-0">{COMPANY_INFO.coords}</span>
-      </div>
     </section>
   );
 }
