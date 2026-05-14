@@ -1,0 +1,210 @@
+@import "tailwindcss";
+
+@theme {
+  --color-surface:       #040D1E;
+  --color-surface-1:     #081528;
+  --color-surface-2:     #0D1E38;
+  --color-fore:          #EEF3FF;
+  --color-fore-dim:      #7A9CC8;
+  --color-fore-muted:    #3D5878;
+  --color-accent:        #1558D0;
+  --color-accent-dim:    #0D3EA8;
+  --color-accent-light:  #4D8FFF;
+  --color-terminal:      #00CFFF;
+  --color-border:        #132040;
+  --color-border-subtle: #0A1630;
+
+  --font-sans: var(--font-inter, "Inter", system-ui, sans-serif);
+  --font-mono: var(--font-jetbrains, "JetBrains Mono", "Courier New", monospace);
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  background-color: #040D1E;
+  color: #EEF3FF;
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background-color: #040D1E;
+  color: #EEF3FF;
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* CRT Scanlines — fixed overlay, no pointer interaction */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.06) 2px,
+    rgba(0, 0, 0, 0.06) 4px
+  );
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* Mechanical noise texture */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 300px 300px;
+  pointer-events: none;
+  z-index: 9998;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 3px; }
+::-webkit-scrollbar-track { background: #0A0A0A; }
+::-webkit-scrollbar-thumb { background: #333333; }
+::-webkit-scrollbar-thumb:hover { background: #555555; }
+
+/* Blueprint grid intersection dot */
+.grid-dot::after {
+  content: '+';
+  position: absolute;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: #333333;
+  line-height: 1;
+}
+
+/* Glowing accent line */
+.accent-line {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background-color: #E61919;
+}
+
+/* Animations */
+@keyframes blink-cursor {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
+@keyframes scroll-marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.cursor-blink::after {
+  content: '_';
+  animation: blink-cursor 1s step-end infinite;
+  color: #E61919;
+}
+
+.status-dot {
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: scroll-marquee 35s linear infinite;
+}
+
+.fade-in-up {
+  animation: fade-in-up 0.6s ease-out forwards;
+}
+
+/* Fluid macro typography */
+.display-xl {
+  font-size: clamp(3.5rem, 10vw, 12rem);
+  font-weight: 900;
+  line-height: 0.9;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+  font-family: var(--font-sans);
+}
+
+.display-lg {
+  font-size: clamp(2.5rem, 7vw, 8rem);
+  font-weight: 900;
+  line-height: 0.92;
+  letter-spacing: -0.035em;
+  text-transform: uppercase;
+  font-family: var(--font-sans);
+}
+
+.display-md {
+  font-size: clamp(1.75rem, 4vw, 4rem);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.025em;
+  text-transform: uppercase;
+  font-family: var(--font-sans);
+}
+
+.label-mono {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #666666;
+}
+
+.data-mono {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* Strikethrough divider with label */
+.rule-label {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.rule-label::before,
+.rule-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: #222222;
+}
+
+/* Warning stripe pattern */
+.warning-stripe {
+  background: repeating-linear-gradient(
+    -45deg,
+    #1558D0,
+    #1558D0 4px,
+    transparent 4px,
+    transparent 12px
+  );
+}
